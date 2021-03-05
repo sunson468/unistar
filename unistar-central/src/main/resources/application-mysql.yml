@@ -1,0 +1,4 @@
+unistar:
+  clust: true
+  data:
+    type: mysql

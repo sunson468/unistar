@@ -1,0 +1,11 @@
+unistar:
+  clust: true
+  data:
+    type: mongodb
+    uri: "mongodb://172.16.199.24:27017/XC_UNISTAR?connectTimeoutMS=10000"
+  cache:
+    type: redis
+    redis:
+      host: "172.16.199.24"
+      port: 16379
+      database: 10

@@ -1,0 +1,49 @@
+server:
+  port: 36524
+---
+spring:
+  application:
+    name: unistar-central
+  data:
+    mongodb:
+      auto-index-creation: true
+      repositories:
+        type: none
+    redis:
+      repositories:
+        enabled: false
+---
+logging:
+  level:
+    root: INFO
+    io.lettuce: ERROR
+    org.mongodb: ERROR
+    org.eclipse: ERROR
+    org.springframework: INFO
+  file:
+    name: logs/${spring.application.name}.log
+---
+unistar:
+  clust: true
+  data:
+    # mongodb | mysql
+    type: mongodb
+    uri: "mongodb://localhost:27017/XC_UNISTAR?connectTimeoutMS=10000"
+    #    uri: "jdbc:mysql://localhost:3306/xc_unistar?useUnicode=true&characterEncoding=utf8"
+    #    username: ""
+    #    password: ""
+  cache:
+    # memory | redis
+    type: redis
+    # Redis
+    redis:
+      # standlone | sentinel | cluster
+      host: "localhost"
+      port: 16379
+      #      password: ""
+      database: 10
+      # sentinel
+      #      master: ""
+      # sentinel | cluster
+      # ip1:port2;ip2:port2
+      #      nodes: ""

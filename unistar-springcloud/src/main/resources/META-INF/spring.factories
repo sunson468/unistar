@@ -1,0 +1,9 @@
+org.springframework.cloud.bootstrap.BootstrapConfiguration=\
+com.up1234567.unistar.springcloud.UnistarBootstrapConfiguration,\
+com.up1234567.unistar.springcloud.logger.UnistarLoggerBootstrapConfiguration,\
+com.up1234567.unistar.springcloud.config.UnistarConfigBootstrapConfiguration,\
+com.up1234567.unistar.springcloud.limit.UnistarLimitBootstrapConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.up1234567.unistar.springcloud.registry.UnistarServiceRegistryAutoConfiguration,\
+com.up1234567.unistar.springcloud.discover.UnistarDiscoverAutoConfiguration,\
+com.up1234567.unistar.springcloud.task.UnistarTaskAutoConfiguration

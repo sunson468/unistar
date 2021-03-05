@@ -1,0 +1,6 @@
+unistar:
+  data:
+    uri: "mongodb://10.0.19.57:27017/XC_UNISTAR?connectTimeoutMS=10000"
+  cache:
+    redis:
+      host: "10.0.19.57"

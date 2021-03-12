@@ -54,7 +54,7 @@ public class UnistarProperties {
     public static class CleanCycle {
 
         // 数据统计保存周期，超过trace天数的将在凌晨被移除
-        private int trace = 3;
+        private int trace = 7;
         // 任务执行记录保存周期，超过task天数的将在凌晨被移除
         private int task = 3;
         // 操作员操作日志保存周期，超过oplog天数的将在凌晨被移除

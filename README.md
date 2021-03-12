@@ -46,4 +46,4 @@ Unistar项目由一个总项目+三个子项目组成，总项目定义整体的
 
 ### Unistar管理控台
 
-Unistar提供了统一的管理控台[unistar-console](/unistar-console)
+Unistar提供了统一的管理控台[unistar-console](https://gitee.com/sunson468/unistar-console)

@@ -14,8 +14,6 @@ SDK包含了内置核心、SpringCloud能力以及扩展功能。
 
 ### Maven引用
 
-目前还没有提交到Maven中央库，请下载源码自己install到自己的本地或者deploy到私库中
-
 ```xml
 <dependency>
     <groupId>com.up1234567</groupId>

@@ -30,17 +30,17 @@ Unistar不仅仅是一个微服务中心，更是一种微的理念。
 
 Unistar项目由一个总项目+三个子项目组成，总项目定义整体的Maven依赖，确保版本的一致性。
 
-- xc-unistar
+- unistar
 
-  - xc-unistar-common
+  - unistar-common
     
     common包的主要作用是定义central服务与springcloud的sdk包之间的公有对象
     
-  - xc-unistar-central [文档](./unistar-central) 
+  - unistar-central [文档](./unistar-central) 
   
     central为unistar的中心服务，通过配置后可启动作为微服务体系的中心，支持动态多中心分布式，通过自定义的选取方式，可以随时动态增添中心服务
 
-  - xc-unistar-springcloud [文档](./unistar-springcloud) 
+  - unistar-springcloud [文档](./unistar-springcloud) 
   
     该sdk包提供了基于SpringCloud的配置获取、服务注册发现等功能的unistar具体实现，项目通过引入该sdk包既可以快速接入unistar中心
 

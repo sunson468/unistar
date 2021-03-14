@@ -136,6 +136,16 @@ Unistar的持久化的接口定义：`IUnistarCache`
 
 任务监听的具体可以参考[Unistar SpringCloud](./xc-unistar-springcloud)模块介绍
 
+### 部署
+
+可以直接下载 [编译好的Jar包](https://gitee.com/sunson468/unistar/releases/1.0.RC) 
+
+启动脚本可参考[Linux应用启动和停止脚本](https://www.up1234567.com/blog/#/view/6b50e81f89a56f69c2b9f21c53ecd2b9)
+
+如果打算分布式部署，必须要用Nginx做前置，Redis做缓存。
+
+数据库支持MongoDB和MySQL，如果是MySQL则需要先执行初始化脚本，参考项目/doc/sql/unistar_mysql.sql
+
 ### 配置参数
 
 ```yaml

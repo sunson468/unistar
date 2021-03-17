@@ -60,7 +60,7 @@ Unistar的持久化的接口定义：`IUnistarCache`
 
 配置中心默认一定会加载无profile标记的配置，其他的profile配置会按照asc码顺序的过程覆盖加载。
 
-配置中心可以针对节点进行临时的动态刷新，该功能可运用于数值控制、功能开关等，具体可以参考[Unistar SpringCloud](./xc-unistar-springcloud)模块介绍。  
+配置中心可以针对节点进行临时的动态刷新，该功能可运用于数值控制、功能开关等，具体可以参考[Unistar SpringCloud](../unistar-springcloud)模块介绍。  
 
 #### 7. 服务注册中心
 
@@ -94,7 +94,7 @@ Unistar的持久化的接口定义：`IUnistarCache`
 
     为解决线上日志打印排查的问题，Unistar在slf4j的基础上扩展了日志开关，可以在控制台实时控制日志的打印，极大的方便了线上问题的排查。
     
-    日志开关的具体可以参考[Unistar SpringCloud](./xc-unistar-springcloud)模块介绍
+    日志开关的具体可以参考[Unistar SpringCloud](../unistar-springcloud)模块介绍
 
 - 限流
 
@@ -134,7 +134,7 @@ Unistar的持久化的接口定义：`IUnistarCache`
 
 当任务调度为单次调用时，支持后续调度配置，形成调度链，调度链支持返回值传递。
 
-任务监听的具体可以参考[Unistar SpringCloud](./xc-unistar-springcloud)模块介绍
+任务监听的具体可以参考[Unistar SpringCloud](../unistar-springcloud)模块介绍
 
 ### 部署
 

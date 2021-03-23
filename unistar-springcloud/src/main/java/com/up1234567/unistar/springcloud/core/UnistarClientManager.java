@@ -1,11 +1,5 @@
 package com.up1234567.unistar.springcloud.core;
 
-import com.up1234567.unistar.springcloud.UnistarProperties;
-import com.up1234567.unistar.springcloud.core.event.IUnistarClientDispatcher;
-import com.up1234567.unistar.springcloud.core.event.IUnistarEventDispatcherAck;
-import com.up1234567.unistar.springcloud.core.event.UnistarEventCache;
-import com.up1234567.unistar.springcloud.core.event.UnistarEventListener;
-import com.up1234567.unistar.springcloud.limit.UnistarLimitManager;
 import com.up1234567.unistar.common.IUnistarConst;
 import com.up1234567.unistar.common.UnistarReadyOutParam;
 import com.up1234567.unistar.common.UnistarReadyParam;
@@ -23,6 +17,11 @@ import com.up1234567.unistar.common.util.DateUtil;
 import com.up1234567.unistar.common.util.JsonUtil;
 import com.up1234567.unistar.common.util.StringUtil;
 import com.up1234567.unistar.common.util.ThreadUtil;
+import com.up1234567.unistar.springcloud.UnistarProperties;
+import com.up1234567.unistar.springcloud.core.event.IUnistarClientDispatcher;
+import com.up1234567.unistar.springcloud.core.event.IUnistarEventDispatcherAck;
+import com.up1234567.unistar.springcloud.core.event.UnistarEventCache;
+import com.up1234567.unistar.springcloud.core.event.UnistarEventListener;
 import lombok.Getter;
 import org.eclipse.jetty.util.BlockingArrayQueue;
 import org.springframework.beans.factory.DisposableBean;
@@ -41,7 +40,6 @@ public class UnistarClientManager implements IUnistarClientDispatcher, Disposabl
     private final static String TIMER_NAME = "Unistar-Heartbeat-Timer";
 
     private UnistarReadyParam readyParam;
-    private UnistarLimitManager unistarLimitManager;
     private UnistarProperties unistarProperties;
     private String centralWs;
     // 标记是否已经启动
@@ -80,11 +78,9 @@ public class UnistarClientManager implements IUnistarClientDispatcher, Disposabl
 
     /**
      * @param unistarProperties
-     * @param unistarLimitManager
      */
-    public UnistarClientManager(UnistarProperties unistarProperties, UnistarLimitManager unistarLimitManager) {
+    public UnistarClientManager(UnistarProperties unistarProperties) {
         this.unistarProperties = unistarProperties;
-        this.unistarLimitManager = unistarLimitManager;
         //
         this.readyParam = unistarProperties.wrapUnistarReadyParam();
         //
@@ -184,7 +180,10 @@ public class UnistarClientManager implements IUnistarClientDispatcher, Disposabl
             // ==============================================
             publish(IUnistarEventConst.HANDLE_READY, readyParam, (success, s) -> {
                 UnistarReadyOutParam readyOutParam = JsonUtil.toClass(s, UnistarReadyOutParam.class);
-                if (readyOutParam != null) unistarLimitManager.addControllerLimits(readyOutParam.getAppLimits());
+                // =========================
+                // 服务准备好了
+                if (readyOutParam != null) clientListeners.parallelStream().forEach(l -> l.ready(readyOutParam));
+                // 启动定时器
                 startTimer();
             });
         }
@@ -206,8 +205,6 @@ public class UnistarClientManager implements IUnistarClientDispatcher, Disposabl
                         UnistarHeartbeatData heartbeatData = new UnistarHeartbeatData();
                         clientListeners.forEach(b -> b.heartbeat(heartbeatData));
                         publish(IUnistarEventConst.HANDLE_HEARTBEAT, heartbeatData);
-                        // 每分钟校验一下
-                        unistarLimitManager.validCheck();
                     }
                 } catch (Exception e) {
                     logger.error("unistar client heartbeat error, {}", e.getMessage());

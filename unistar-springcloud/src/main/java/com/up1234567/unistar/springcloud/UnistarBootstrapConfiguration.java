@@ -17,8 +17,8 @@ public class UnistarBootstrapConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(IUnistarClientDispatcher.class)
-    public IUnistarClientDispatcher unistarClientDispatcher(UnistarProperties unistarProperties, UnistarLimitManager unistarLimitManager) {
-        return new UnistarClientManager(unistarProperties, unistarLimitManager);
+    public IUnistarClientDispatcher unistarClientDispatcher(UnistarProperties unistarProperties) {
+        return new UnistarClientManager(unistarProperties);
     }
 
 }

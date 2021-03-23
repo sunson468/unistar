@@ -32,7 +32,6 @@ public class UnistarPropertySourceLocator implements PropertySourceLocator, Appl
     private final static String UNISTAR_SOURCE_REMOTE_NAME = "unistar-remote-config";
 
     private AtomicBoolean remoted = new AtomicBoolean(false);   // 控制只主动读取一次远程
-    private AtomicBoolean inited = new AtomicBoolean(false);    // 配置是否已经拉取完成
     private AtomicBoolean ready = new AtomicBoolean(false);     // 应用是否准备就绪
 
     private IUnistarClientDispatcher unistarEventPublisher;

@@ -16,5 +16,6 @@ public interface IUnistarClustMsg {
     int TYPE_WATCH = 103; // 路径监听
     int TYPE_LIMIT_CHANGED = 104; // 限流更新
     int TYPE_LOGGER_CHANGED = 105; // 日志开关更新
+    int TYPE_LOGGER_SEARCH = 106; // 日志查询
 
 }

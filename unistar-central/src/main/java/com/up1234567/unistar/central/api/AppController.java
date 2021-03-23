@@ -24,6 +24,7 @@ import com.up1234567.unistar.central.support.auth.EAuthRole;
 import com.up1234567.unistar.central.support.util.AesUtil;
 import com.up1234567.unistar.common.IUnistarConst;
 import com.up1234567.unistar.common.logger.IUnistarLogger;
+import com.up1234567.unistar.common.logger.UnistarLoggerSearchParam;
 import com.up1234567.unistar.common.util.DateUtil;
 import com.up1234567.unistar.common.util.JsonUtil;
 import com.up1234567.unistar.common.util.SecurityUtil;
@@ -630,6 +631,33 @@ public class AppController {
         }
         connectService.limitChanged(appLimit);
         //
+        retModel.setRetCode(BaseOutModel.RET_OK);
+        return retModel;
+    }
+
+    @PostMapping("logger")
+    public BaseOutModel logger(@RequestAttribute(AuthToken.REQ_AUTH) AuthToken authToken, @RequestBody BaseDataInModel<UnistarLoggerSearchParam> inModel) {
+        BaseOutModel retModel = new BaseOutModel();
+        UnistarLoggerSearchParam param = inModel.getData();
+        if (param == null) return retModel;
+        if (StringUtils.length(param.getKeyword()) < 5) return retModel;
+        // 创建一个查询
+        String searchId = SecurityUtil.md5(DateUtil.now() + RandomStringUtils.random(8));
+        retModel.setData(searchId);
+        // =============================
+        param.setSearchId(searchId);
+        param.setBefore(Math.max(0, Math.min(20, param.getBefore())));
+        param.setAfter(Math.max(0, Math.min(20, param.getAfter())));
+        param.setMaxline(Math.max(1, Math.min(100, param.getMaxline())));
+        connectService.nodeLoggerSearched(inModel.getNamespace(), param);
+        retModel.setRetCode(BaseOutModel.RET_OK);
+        return retModel;
+    }
+
+    @PostMapping("logger/result")
+    public BaseOutModel loggerResult(@RequestAttribute(AuthToken.REQ_AUTH) AuthToken authToken, @RequestBody BaseDataInModel<String> inModel) {
+        BaseOutModel retModel = new BaseOutModel();
+        retModel.setData(appCacheService.listLoggerSearchResult(inModel.getNamespace(), inModel.getData()));
         retModel.setRetCode(BaseOutModel.RET_OK);
         return retModel;
     }

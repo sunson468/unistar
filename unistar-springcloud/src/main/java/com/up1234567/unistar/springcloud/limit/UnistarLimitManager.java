@@ -1,13 +1,16 @@
 package com.up1234567.unistar.springcloud.limit;
 
+import com.up1234567.unistar.common.UnistarReadyOutParam;
+import com.up1234567.unistar.common.heartbeat.UnistarHeartbeatData;
 import com.up1234567.unistar.common.limit.UnistarAppLimit;
 import com.up1234567.unistar.common.util.DateUtil;
+import com.up1234567.unistar.springcloud.core.IUnistarClientListener;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class UnistarLimitManager {
+public class UnistarLimitManager implements IUnistarClientListener {
 
     // Controller层控制器
     private final ConcurrentHashMap<String, UnistarLimitWrapper> controllerLimits = new ConcurrentHashMap<>();
@@ -15,6 +18,18 @@ public class UnistarLimitManager {
     private final ConcurrentHashMap<String, UnistarLimitWrapper> feignLimits = new ConcurrentHashMap<>();
     // Feign层熔断器
     private final ConcurrentHashMap<String, UnistarLimitWrapper> feignRuleLimits = new ConcurrentHashMap<>();
+
+    @Override
+    public void ready(UnistarReadyOutParam readyOutParam) {
+        if (readyOutParam != null) addControllerLimits(readyOutParam.getAppLimits());
+    }
+
+    @Override
+    public void heartbeat(UnistarHeartbeatData heartbeatData) {
+
+        // 每分钟校验一下
+        validCheck();
+    }
 
     /**
      * 设置Controller的控制

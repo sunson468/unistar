@@ -13,8 +13,10 @@ import org.springframework.context.annotation.Configuration;
 public class UnistarLimitBootstrapConfiguration {
 
     @Bean
-    public UnistarLimitManager unistarLimitManager() {
-        return new UnistarLimitManager();
+    public UnistarLimitManager unistarLimitManager(IUnistarClientDispatcher unistarClientDispatcher) {
+        UnistarLimitManager unistarLimitManager = new UnistarLimitManager();
+        unistarClientDispatcher.addClientListener(unistarLimitManager);
+        return unistarLimitManager;
     }
 
     @Bean

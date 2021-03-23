@@ -18,6 +18,7 @@ import com.up1234567.unistar.common.IUnistarConst;
 import com.up1234567.unistar.common.UnistarParam;
 import com.up1234567.unistar.common.event.IUnistarEventConst;
 import com.up1234567.unistar.common.exception.UnistarRemoteException;
+import com.up1234567.unistar.common.logger.UnistarLoggerSearchParam;
 import com.up1234567.unistar.common.task.UnistarTaskData;
 import com.up1234567.unistar.common.util.JsonUtil;
 import com.up1234567.unistar.common.util.StringUtil;
@@ -66,6 +67,7 @@ public class UnistarConnectService implements IUnistarConnectorManager, IUnistar
                 , IUnistarClustMsg.TYPE_WATCH
                 , IUnistarClustMsg.TYPE_LIMIT_CHANGED
                 , IUnistarClustMsg.TYPE_LOGGER_CHANGED
+                , IUnistarClustMsg.TYPE_LOGGER_SEARCH
         );
         // 初始化连接
         connectors = new ConcurrentHashMap<>();
@@ -108,6 +110,11 @@ public class UnistarConnectService implements IUnistarConnectorManager, IUnistar
                 LoggerMsg loggerMsg = JsonUtil.toClass(msg.getBody(), LoggerMsg.class);
                 if (loggerMsg == null || !checkNamespace(loggerMsg)) return;
                 doLoggerChanged(loggerMsg);
+                break;
+            case IUnistarClustMsg.TYPE_LOGGER_SEARCH:
+                LoggerMsg searchMsg = JsonUtil.toClass(msg.getBody(), LoggerMsg.class);
+                if (searchMsg == null || !checkNamespace(searchMsg)) return;
+                doLoggerSearched(searchMsg);
                 break;
         }
     }
@@ -368,6 +375,31 @@ public class UnistarConnectService implements IUnistarConnectorManager, IUnistar
 
     private void doLoggerChanged(LoggerMsg loggerMsg) {
         connectors.get(loggerMsg.getNamespace()).send(loggerMsg.getClients(), IUnistarEventConst.EVENT_LOGGER_CHANGED, loggerMsg.getLoggers());
+    }
+
+    /**
+     * 查询节点日志
+     *
+     * @param namespace
+     * @param param
+     */
+    public void nodeLoggerSearched(String namespace, UnistarLoggerSearchParam param) {
+        LoggerMsg loggerMsg = new LoggerMsg();
+        loggerMsg.setNamespace(namespace);
+        loggerMsg.setLoggers(JsonUtil.toJsonString(param));
+        //
+        if (clustProperties.isClust()) {
+            unistarCluster.multicast(IUnistarClustMsg.TYPE_LOGGER_SEARCH, loggerMsg);
+        } else {
+            doLoggerSearched(loggerMsg);
+        }
+    }
+
+    /**
+     * @param loggerMsg
+     */
+    private void doLoggerSearched(LoggerMsg loggerMsg) {
+        connectors.get(loggerMsg.getNamespace()).sendAll(IUnistarEventConst.EVENT_LOG_SEARCH, loggerMsg.getLoggers());
     }
 
 }

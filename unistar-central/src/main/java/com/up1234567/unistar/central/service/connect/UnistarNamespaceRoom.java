@@ -42,4 +42,13 @@ public class UnistarNamespaceRoom {
         });
     }
 
+    /**
+     * @param action
+     * @param params
+     * @return
+     */
+    public void sendAll(String action, String params) {
+        connectors.forEach((s, session) -> WsSendUtil.send(session, action, params));
+    }
+
 }

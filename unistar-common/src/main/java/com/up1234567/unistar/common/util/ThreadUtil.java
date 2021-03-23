@@ -91,4 +91,13 @@ public class ThreadUtil {
         sleep(Math.min(millis, maxMillis));
     }
 
+    /**
+     * @param runnable
+     */
+    public static void delayRun(long millis, Runnable runnable) {
+        // 睡眠一定时间
+        sleep(millis);
+        runnable.run();
+    }
+
 }

@@ -18,7 +18,7 @@ SDK包含了内置核心、SpringCloud能力以及扩展功能。
 <dependency>
     <groupId>com.up1234567</groupId>
     <artifactId>unistar-springcloud</artifactId>
-    <version>1.0.RC</version>
+    <version>1.1.RC</version>
 </dependency>
 ```
 
@@ -69,12 +69,13 @@ Unistar的限流是基于拦截器的，一般情况下在客户端无需做任�
 
 如果你的项目中有直接采用RestTemplate的，则需要采用UnistarRestTemplate(参考上面的启动类)，否则系统检测不到这类请求，也无法进行限流控制。
 
-
 ### 扩展功能
 
 #### 实时服务链路跟踪
 
 不同于日志方案的链路追踪，Unistar的实时链路是在线上运行的时候，根据选中的路径，随机截取一个请求，然后准实时的反馈调用链路，时效等，这个功能可用于实时分析线上功能。
+
+1.1.RC版本以上，可以配置日志查询进行线上问题排查
 
 #### 任务调度
 

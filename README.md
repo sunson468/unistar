@@ -33,7 +33,7 @@ Unistar项目由一个总项目+三个子项目组成，总项目定义整体的
 - unistar
 
   - unistar-common
-    
+    W
     common包的主要作用是定义central服务与springcloud的sdk包之间的公有对象
     
   - unistar-central [文档](./unistar-central) 
@@ -47,3 +47,7 @@ Unistar项目由一个总项目+三个子项目组成，总项目定义整体的
 ### Unistar管理控台
 
 Unistar提供了统一的管理控台[unistar-console](https://gitee.com/sunson468/unistar-console)
+
+### Unistar未来计划
+
+Unistar项目未来将往两个方面延伸，首先是Unistar自身的完善，其次Unistar应用服务，构建一些常见的服务，形成一个基本的业务中台。

@@ -21,6 +21,8 @@ public interface IUnistarEventConst {
     String HANDLE_HEARTBEAT = EVENT_PREFIX + "heartbeat";
     // 同步监听
     String HANDLE_TRACE_WATCH = EVENT_PREFIX + "trace_watch";
+    // 日志检索
+    String HANDLE_LOG_SEARCH = EVENT_PREFIX + "logger_search";
 
     // ====================================================
     // 以下为客户端节点内置监听事件
@@ -37,5 +39,7 @@ public interface IUnistarEventConst {
     String EVENT_LIMIT_CHANGED = EVENT_PREFIX + "limit_changed";
     // 日志开关发生变化
     String EVENT_LOGGER_CHANGED = EVENT_PREFIX + "logger_changed";
+    // 日志检索
+    String EVENT_LOG_SEARCH = EVENT_PREFIX + "logger_search";
 
 }

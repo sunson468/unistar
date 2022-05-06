@@ -2,10 +2,11 @@ package com.up1234567.unistar.common.util;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.util.StringUtils;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,17 +59,21 @@ public final class JsonUtil {
     }
 
     /**
-     * @param str
+     * @param json
      * @param clazz
      * @param <T>
      * @return
      */
-    public static <T> List<T> toClassAsList(String str, Class<T> clazz) {
+    public static <T> List<T> toClassAsList(String json, Class<T> clazz) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         try {
-            JavaType javaType = O_M.getTypeFactory().constructParametricType(List.class, clazz);
-            return O_M.readValue(str, javaType);
-        } catch (Exception e) {
-            throw new RuntimeException("反序列化为对象失败, " + clazz.getName() + ": " + e.getMessage());
+
+            List<T> retList = new ArrayList<>();
+            objectMapper.readTree(json).forEach(el -> retList.add(toClass(el.toString(), clazz)));
+            return retList;
+        } catch (IOException e) {
+            throw new RuntimeException("JSON反序列化失败");
         }
     }
 
